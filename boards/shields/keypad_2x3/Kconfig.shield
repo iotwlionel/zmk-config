@@ -1,2 +1,0 @@
-config SHIELD_KEYPAD_2X3
-    def_bool $(shields_list_contains,keypad_2x3)

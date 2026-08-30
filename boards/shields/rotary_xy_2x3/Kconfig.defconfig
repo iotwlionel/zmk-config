@@ -1,0 +1,6 @@
+if SHIELD_ROTARY_XY_2X3
+
+config ZMK_KEYBOARD_NAME
+    default "rotary_xy_2x3"
+
+endif # SHIELD_ROTARY_XY_2X3

@@ -1,0 +1,2 @@
+config SHIELD_ROTARY_XY_2X3
+    def_bool $(shields_list_contains,rotary_xy_2x3)

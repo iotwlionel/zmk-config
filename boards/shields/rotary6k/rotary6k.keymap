@@ -1,19 +1,28 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/pointing.h> // Enables SCRL_UP and SCRL_DN constants
+#include <dt-bindings/zmk/pointing.h> // Required for &msc scroll behaviors
 
 / {
+    behaviors {
+        // Correct macro syntax container for mapping encoders to mouse scroll wheel actions
+        scroll_encoder: scroll_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DN>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
-            // Mapping for the 6 direct inputs
+            // Mapping for your 6 direct input GPIO keys
             bindings = <
                 &kp Q  &kp W  &kp E  &kp R  &kp T  &studio_unlock
             >;
 
-            // Use standard &inc_dec_kp directly with pointing definitions
-            sensor-bindings = <&inc_dec_kp SCRL_UP SCRL_DN>;
+            // Links directly to the custom scroll behavior node defined above
+            sensor-bindings = <&scroll_encoder>;
         };
     };
 };

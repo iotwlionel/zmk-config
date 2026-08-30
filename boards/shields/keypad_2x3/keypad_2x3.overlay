@@ -1,4 +1,4 @@
-#include "your_keyboard-layouts.dtsi"
+#include "keypad_2x3-layouts.dtsi"
 
 / {
     chosen {

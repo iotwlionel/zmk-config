@@ -18,4 +18,4 @@
 #     artifact-name: corne_left_with_studio
 #
 ---
-board: [ "rotary_xy_3x2" ]
+board: [ "nice_nano" ]

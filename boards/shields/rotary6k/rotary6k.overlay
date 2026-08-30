@@ -1,4 +1,5 @@
-#include <dt-bindings/zmk/matrix_transform.h> // <-- Add this header to fix the parse error
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <physical_layouts.dtsi> // <-- Required to use the &key_physical_attrs macro
 
 / {
     chosen {
@@ -25,22 +26,33 @@
         compatible = "alps,ec11";
         a-gpios = <&pro_micro 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         b-gpios = <&pro_micro 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        steps = <80>; // Pulses per full rotation
+        steps = <80>; 
         status = "okay";
     };
 
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
         sensors = <&encoder>;
-        triggers-per-rotation = <20>; // Matches typical tactile detents
+        triggers-per-rotation = <20>; 
     };
 
-    // 3. Physical Layout required by ZMK Studio
+    // 3. Physical Layout required by ZMK Studio (with structural dimensions)
     physical_layout0: physical_layout_0 {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
-        kscan = <&kscan0>;
         transform = <&default_transform>;
+        kscan = <&kscan0>;
+        
+        // Map 6 physical keys in a single straight row for ZMK Studio rendering
+        // Parameters format: <width height X-offset Y-offset rotation rotation-X rotation-Y>
+        keys 
+            = <&key_physical_attrs 100 100    0   0 0 0 0> // Key 1 (X=0)
+            , <&key_physical_attrs 100 100  100   0 0 0 0> // Key 2 (X=1U)
+            , <&key_physical_attrs 100 100  200   0 0 0 0> // Key 3 (X=2U)
+            , <&key_physical_attrs 100 100  300   0 0 0 0> // Key 4 (X=3U)
+            , <&key_physical_attrs 100 100  400   0 0 0 0> // Key 5 (X=4U)
+            , <&key_physical_attrs 100 100  500   0 0 0 0> // Key 6 (X=5U)
+            ;
     };
 
     default_transform: matrix_transform {

@@ -1,0 +1,6 @@
+if SHIELD_SAMPLE
+
+config ZMK_KEYBOARD_NAME
+    default "sample"
+
+endif # SHIELD_SAMPLE

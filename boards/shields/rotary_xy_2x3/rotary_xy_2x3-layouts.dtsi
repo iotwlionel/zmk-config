@@ -1,23 +1,20 @@
-// See https://zmk.dev/docs/development/hardware-integration/physical-layouts
-// for how to configure this.
-
-#include <physical_layouts.dtsi>
+#include <dt-bindings/zmk/physical_layouts.h>
 
 / {
-    default_layout: default_layout {
+    physical_layout0: physical_layout_0 {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
         transform = <&default_transform>;
-        kscan = <&kscan>;
-
-        // Edit this to define the positions and sizes of the keys, or remove it
-        // if your keyboard will not support ZMK Studio.
-        // https://zmk.dev/docs/development/hardware-integration/physical-layouts#optional-keys-property
-        keys  //                     w   h    x    y     rot    rx    ry
-            = <&key_physical_attrs 100 100    0    0       0     0     0>
-            , <&key_physical_attrs 100 100  100    0       0     0     0>
-            , <&key_physical_attrs 100 100    0  100       0     0     0>
-            , <&key_physical_attrs 100 100  100  100       0     0     0>
+        kscan = <&kscan0>;
+        
+        // Tells ZMK Studio how your 6 keys are positioned on a 2D canvas grid
+        keys
+            = <&key_physical_attrs 0 0 0 100 100 0 0> // Key 1 (Top Left)
+            , <&key_physical_attrs 0 1 0 100 100 0 0> // Key 2 (Top Mid)
+            , <&key_physical_attrs 0 2 0 100 100 0 0> // Key 3 (Top Right)
+            , <&key_physical_attrs 1 0 0 100 100 0 0> // Key 4 (Bottom Left)
+            , <&key_physical_attrs 1 1 0 100 100 0 0> // Key 5 (Bottom Mid)
+            , <&key_physical_attrs 1 2 0 100 100 0 0> // Key 6 (Bottom Right)
             ;
     };
 };

@@ -12,10 +12,11 @@
     // Formats your 6 physical buttons into an addressable sequence for ZMK Studio
     default_transform: keymap_transform0 {
         compatible = "zmk,matrix-transform";
-        columns = <6>;
-        rows = <1>;
+        columns = <3>;
+        rows = <2>;
         map = <
-            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)
+            RC(0,0) RC(0,1) RC(0,2) // Top Row: Key 1, Key 2, Key 3
+            RC(0,3) RC(0,4) RC(0,5) // Bottom Row: Key 4, Key 5, Key 6
         >;
     };
 

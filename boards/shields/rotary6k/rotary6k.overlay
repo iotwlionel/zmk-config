@@ -7,7 +7,6 @@
         zmk,physical-layout = &physical_layout0;
     };
 
-    // 1. Direct GPIO Pin Input Scan Configuration
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
@@ -21,11 +20,10 @@
             ;
     };
 
-    // 2. Hardware Encoder Configuration
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW)>; // P1.11 no pull-up
-        b-gpios = <&gpio1 13 (GPIO_ACTIVE_LOW)>; // P1.13 no pull-up
+        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW)>; // P1.11 no internal pullup
+        b-gpios = <&gpio1 13 (GPIO_ACTIVE_LOW)>; // P1.13 no internal pullup
         steps = <100>; // High-resolution step rate
         status = "okay";
     };
@@ -36,7 +34,6 @@
         triggers-per-rotation = <100>; 
     };
 
-    // 3. Physical Layout required by ZMK Studio
     physical_layout0: physical_layout_0 {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";

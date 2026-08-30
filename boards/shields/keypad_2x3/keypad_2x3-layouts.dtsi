@@ -1,23 +1,34 @@
-// See https://zmk.dev/docs/development/hardware-integration/physical-layouts
-// for how to configure this.
-
 #include <physical_layouts.dtsi>
 
 / {
+    // 1:1 Mapping of raw direct-pins to your logical keymap array
+    default_transform: default_transform {
+        compatible = "zmk,matrix-transform";
+        rows = <2>;
+        columns = <3>;
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) // Row 1: Col 1, Col 2, Col 3
+            RC(1,0) RC(1,1) RC(1,2) // Row 2: Col 1, Col 2, Col 3
+        >;
+    };
+
     default_layout: default_layout {
         compatible = "zmk,physical-layout";
-        display-name = "Default Layout";
+        display-name = "3x2 Macropad";
         transform = <&default_transform>;
-        kscan = <&kscan>;
-
-        // Edit this to define the positions and sizes of the keys, or remove it
-        // if your keyboard will not support ZMK Studio.
-        // https://zmk.dev/docs/development/hardware-integration/physical-layouts#optional-keys-property
-        keys  //                     w   h    x    y     rot    rx    ry
-            = <&key_physical_attrs 100 100    0    0       0     0     0>
-            , <&key_physical_attrs 100 100  100    0       0     0     0>
-            , <&key_physical_attrs 100 100    0  100       0     0     0>
-            , <&key_physical_attrs 100 100  100  100       0     0     0>
-            ;
+        kscan = <&kscan0>;
+        
+        // Tells ZMK Studio how to render the 6 keys visually (width, height, X-pos, Y-pos)
+        // 100 centi-units = 1 standard key unit (1u) width/height
+        keys = <
+            /* Row 1 Keys */
+            <&key_physical_attrs 100 100    0    0 0 0 0>
+            , <&key_physical_attrs 100 100 100    0 0 0 0>
+            , <&key_physical_attrs 100 100 200    0 0 0 0>
+            /* Row 2 Keys */
+            , <&key_physical_attrs 100 100    0 100 0 0 0>
+            , <&key_physical_attrs 100 100 100 100 0 0 0>
+            , <&key_physical_attrs 100 100 200 100 0 0 0>
+        >;
     };
 };

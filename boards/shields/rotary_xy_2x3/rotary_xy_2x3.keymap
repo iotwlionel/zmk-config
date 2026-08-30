@@ -5,16 +5,20 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
-    // Define a default keymap here.
-    // See https://zmk.dev/docs/development/hardware-integration/new-shield#default-keymap.
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
+            // 3x2 Matrix = 6 Digital Keys 
+            // Key 6 is mapped to &studio_unlock so you can access ZMK Studio over USB!
             bindings = <
-                &kp A &kp B
-                &kp C &kp D
+                &kp Q          &kp W          &kp E
+                &kp A          &kp S          &studio_unlock
             >;
+
+            // 3. ROTARY ENCODER BEHAVIOR
+            // Tells the encoder to output Page Up/Down when twisted
+            sensor-bindings = <&inc_dec_kp PG_UP PG_DN>;
         };
     };
 };

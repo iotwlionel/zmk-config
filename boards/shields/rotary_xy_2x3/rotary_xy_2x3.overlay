@@ -3,48 +3,55 @@
 // instructions.
 
 #include <dt-bindings/zmk/matrix_transform.h>
-
+#include <dt-bindings/zmk/input_transform.h>
 #include "rotary_xy_2x3-layouts.dtsi"
 
 / {
-    chosen {
-        zmk,physical-layout = &default_layout;
+    // 1. ROTARY ENCODER CONFIGURATION
+    encoder: encoder {
+        compatible = "alps,ec11";
+        // Connect the encoder's single pin A and pin B to these Pro Micro pins
+        a-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <80>;
     };
 
-    kscan: kscan {
-        // If the hardware does not use a switch matrix, change this to the
-        // appropriate driver and update the properties below to match.
-        // See https://zmk.dev/docs/config/kscan for supported key scan drivers.
-        compatible = "zmk,kscan-gpio-matrix";
-        // Set this to "col2row" or "row2col" to match the hardware. If using
-        // "row2col", change the col-gpios to (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)
-        // and the row-gpios to GPIO_ACTIVE_HIGH.
-        diode-direction = "col2row";
-        wakeup-source;
-
-        // Replace these comments with the GPIO pins in the matrix.
-        // See https://zmk.dev/docs/development/hardware-integration/new-shield#shield-overlays
-        col-gpios
-            = <&pro_micro 0 GPIO_ACTIVE_HIGH>
-            , <&pro_micro 0 GPIO_ACTIVE_HIGH>
-            ;
-
-        row-gpios
-            = <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&pro_micro 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            ;
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&encoder>;
+        triggers-per-rotation = <20>;
     };
 
-    default_transform: default_transform {
-        // See https://zmk.dev/docs/development/hardware-integration/new-shield#matrix-transform
-        // for how to configure this
-        compatible = "zmk,matrix-transform";
-        columns = <2>;
-        rows = <2>;
+    // 2. CHOOSE YOUR RELEVANT ANALOG INPUTS
+    joystick: analog_axis {
+        compatible = "analog-axis";
+        poll-period-ms = <10>; // 10ms sampling rate for smooth movement
+        
+        x_axis {
+            zephyr,axis = <INPUT_REL_X>;
+            io-channels = <&adc 1>; // Pro Micro A1 pin (A0, A1, A2, A3 are valid ADC channels)
+            out-min = <(-30)>;     // Max cursor speed to the left
+            out-max = <30>;       // Max cursor speed to the right
+            deadzone = <12>;      // Prevents drifting when untouched
+        };
 
-        map = <
-            RC(0, 0) RC(0, 1)
-            RC(1, 0) RC(1, 1)
-        >;
+        y_axis {
+            zephyr,axis = <INPUT_REL_Y>;
+            io-channels = <&adc 2>; // Pro Micro A2 pin
+            out-min = <(-30)>;     // Max cursor speed upward
+            out-max = <30>;       // Max cursor speed downward
+            deadzone = <12>;      // Prevents drifting when untouched
+        };
     };
+
+    // 2. TRANSLATE SIGNALS INTO LIVE MOUSE DATA
+    joystick_listener: joystick_listener {
+        compatible = "zmk,input-listener";
+        device = <&joystick>;
+    };
+};
+
+// 3. ENABLE THE INTERNAL VOLTAGE CHANNELS ON THE Microcontroller
+&adc {
+    status = "okay";
 };

@@ -1,9 +1,12 @@
 // This file was generated from a template. Edit it to match your keyboard.
-// See https://zmk.dev/docs/development/hardware-integration/new-shield for more
+// See https://zmk.dev for more
 // instructions.
 
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/zmk/input_transform.h>
+// CRITICAL FIX: Provides the definition mapping for INPUT_REL_X and INPUT_REL_Y
+#include <dt-bindings/zmk/input_processors.h> 
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include "rotary_xy_2x3-layouts.dtsi"
 
 / {
@@ -79,7 +82,7 @@
         compatible = "zmk,input-listener";
         device = <&joystick>;
     };
-}; // <-- This closes the main root node block cleanly.
+}; 
 
 // 4. ENABLE THE INTERNAL VOLTAGE CHANNELS (Lives safely outside the root block)
 &adc {

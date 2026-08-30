@@ -5,16 +5,17 @@
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
         transform = <&default_transform>;
-        // FIX: Points directly to the composite driver node we defined in your overlay
         kscan = <&kscan_composite>; 
         
+        // Positions your keys across a standard 3-column, 2-row macropad grid canvas
+        // Format parameters: <&key_physical_attrs ROW_INDEX COL_INDEX CHASSIS_ROTATION WIDTH HEIGHT X_OFFSET Y_OFFSET>
         keys
-            = <&key_physical_attrs 0 0 0 100 100 0 0> // Key 1 (Top Left)
-            , <&key_physical_attrs 0 1 0 100 100 0 0> // Key 2 (Top Mid)
-            , <&key_physical_attrs 0 2 0 100 100 0 0> // Key 3 (Top Right)
-            , <&key_physical_attrs 1 0 0 100 100 0 0> // Key 4 (Bottom Left)
-            , <&key_physical_attrs 1 1 0 100 100 0 0> // Key 5 (Bottom Mid)
-            , <&key_physical_attrs 1 2 0 100 100 0 0> // Key 6 (Bottom Right)
+            = <&key_physical_attrs 0 0 0 100 100    0    0> // Key 1 (Q - Top Left)
+            , <&key_physical_attrs 0 1 0 100 100  100    0> // Key 2 (W - Top Mid)
+            , <&key_physical_attrs 0 2 0 100 100  200    0> // Key 3 (E - Top Right)
+            , <&key_physical_attrs 1 0 0 100 100    0  100> // Key 4 (A - Bottom Left)
+            , <&key_physical_attrs 1 1 0 100 100  100  100> // Key 5 (S - Bottom Mid)
+            , <&key_physical_attrs 1 2 0 100 100  200  100> // Key 6 (Unlock - Bottom Right)
             ;
     };
 };

@@ -1,64 +1,45 @@
-// This file utilizes natively linked ZMK kscan drivers to avoid linker crashes.
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/zmk/input_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include "rotary_xy_2x3-layouts.dtsi"
 
 / {
     chosen {
-        zmk,kscan = &kscan_composite;
+        zmk,kscan = &kscan0;
         zmk,physical-layout = &physical_layout0;
     };
 
-    // Formats your 6 physical buttons into an addressable sequence for ZMK Studio
+    // 1. CRITICAL MATRIX FIX: Defines a 2-Row by 3-Column matrix map for ZMK Studio
     default_transform: keymap_transform0 {
         compatible = "zmk,matrix-transform";
         columns = <3>;
         rows = <2>;
         map = <
-            RC(0,0) RC(0,1) RC(0,2) // Top Row: Key 1, Key 2, Key 3
-            RC(1,0) RC(1,1) RC(1,2) // Bottom Row: Key 4, Key 5, Key 6
+            RC(0,0) RC(0,1) RC(0,2) // Row 0 (Top Row): Keys 1, 2, 3
+            RC(1,0) RC(1,1) RC(1,2) // Row 1 (Bottom Row): Keys 4, 5, 6
         >;
     };
 
-    // Composite manager grouping your direct keys safely into 2 rows
-    kscan_composite: kscan_composite {
-        compatible = "zmk,kscan-composite";
-        rows = <2>;
-        columns = <3>;
-
-        // Row 1: First 3 keys from your direct pin array
-        row0 {
-            kscan = <&kscan_direct>;
-            row = <0>;
-        };
-
-        // Row 2: Last 3 keys from your direct pin array
-        row1 {
-            kscan = <&kscan_direct>;
-            row = <1>;
-            column-offset = <3>; // Offsets the indexing to start at key 4
-        };
-    };
-
-    kscan_direct: kscan_direct {
+    // 2. Direct pin layout mapped cleanly to Row 0 and Row 1 matrix addresses
+    kscan0: kscan_direct {
         compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
 
         input-gpios
-            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1 (P0.17)
-            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2 (P0.20)
-            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 3 (P0.22)
-            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 4 (P0.24)
-            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 5 (P1.00)
-            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 6 (P0.11)
+            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Row 0, Col 0 (Key 1)
+            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Row 0, Col 1 (Key 2)
+            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Row 0, Col 2 (Key 3)
+            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Row 1, Col 0 (Key 4)
+            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Row 1, Col 1 (Key 5)
+            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Row 1, Col 2 (Key 6)
             ;
     };
 
-    // ROTARY ENCODER HARDWARE MAPPING
+    // 3. ROTARY ENCODER HARDWARE MAPPING
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // (P1.11)
-        b-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // (P1.13)
+        a-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; 
+        b-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; 
         steps = <80>;
     };
 
@@ -67,10 +48,18 @@
         sensors = <&encoder>;
         triggers-per-rotation = <20>;
     };
+};
 
 // A3 D18 P0.29 (ADC5) P1.15
 // A2 D19 P0.02 (ADC0) P0.02
 // A1 D20 P0.31 (ADC7) P0.29
 // A0 D21 P0.30 (ADC6) P0.31ewewewew
+//        input-gpios
+//            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1 (P0.17)
+//            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2 (P0.20)
+//            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 3 (P0.22)
+//            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 4 (P0.24)
+//            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 5 (P1.00)
+//            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 6 (P0.11)
+//            ;
 
-};

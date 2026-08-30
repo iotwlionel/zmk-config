@@ -19,16 +19,17 @@
         transform = <&default_transform>;
         kscan = <&kscan0>;
         
-        // Tells ZMK Studio how to visually arrange the 6 keys on a 3x2 layout grid
+        // Visual grid settings for ZMK Studio
+        // Width Height X-Pos Y-Pos R-Angle R-X R-Y
         keys = <
             /* Visual Row 1 (X positions: 0, 100, 200 at Y: 0) */
-            <&key_physical_attrs 100 100    0    0 0 0 0>
-            , <&key_physical_attrs 100 100 100    0 0 0 0>
-            , <&key_physical_attrs 100 100 200    0 0 0 0>
+            <&key_physical_attrs 100 100   0   0 0 0 0>,
+            <&key_physical_attrs 100 100 100   0 0 0 0>,
+            <&key_physical_attrs 100 100 200   0 0 0 0>,
             /* Visual Row 2 (X positions: 0, 100, 200 at Y: 100) */
-            , <&key_physical_attrs 100 100    0 100 0 0 0>
-            , <&key_physical_attrs 100 100 100 100 0 0 0>
-            , <&key_physical_attrs 100 100 200 100 0 0 0>
+            <&key_physical_attrs 100 100   0 100 0 0 0>,
+            <&key_physical_attrs 100 100 100 100 0 0 0>,
+            <&key_physical_attrs 100 100 200 100 0 0 0>
         >;
     };
 };

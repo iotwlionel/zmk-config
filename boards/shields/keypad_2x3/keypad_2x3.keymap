@@ -7,8 +7,8 @@
 
         default_layer {
             bindings = <
-                &kp N1    &kp N2    &kp N3      // Visual Row 1 (Pins 0, 1, 2)
-                &kp N4    &kp N5    &studio_unlock // Visual Row 2 (Pins 3, 4, 5)
+                &kp N1    &kp N2    &kp N3         // Visual Row 1
+                &kp N4    &kp N5    &studio_unlock // Visual Row 2
             >;
         };
     };

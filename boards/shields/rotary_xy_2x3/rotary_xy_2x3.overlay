@@ -13,7 +13,7 @@
         zmk,physical-layout = &physical_layout0;
     };
 
-    // A default transform block is required to map your 6 keys cleanly
+    // A default transform block maps your 6 keys cleanly
     default_transform: keymap_transform0 {
         compatible = "zmk,matrix-transform";
         columns = <6>;
@@ -52,25 +52,23 @@
         triggers-per-rotation = <20>;
     };
 
-    // 2. CHOOSE YOUR RELEVANT ANALOG INPUTS (Assigned an explicit instance node)
+    // 2. NATIVE ZMK TWO-AXIS POINTER FOR JOYSTICKS
     joystick: joystick {
-        compatible = "analog-axis";
-        poll-period-ms = <10>; 
-        
-        axis_x {
-            zephyr,axis = <INPUT_REL_X>;
+        compatible = "zmk,input-two-axis";
+        trigger-period-ms = <12>;
+
+        x_axis {
+            input-code = <INPUT_REL_X>;
             io-channels = <&adc 1>; // Maps to Pro Micro A1 / physical pin 19
-            out-min = <(-30)>;     
-            out-max = <30>;       
-            deadzone = <12>;      
+            deadzone = <12>;
+            scale = <30>;
         };
 
-        axis_y {
-            zephyr,axis = <INPUT_REL_Y>;
+        y_axis {
+            input-code = <INPUT_REL_Y>;
             io-channels = <&adc 2>; // Maps to Pro Micro A2 / physical pin 20
-            out-min = <(-30)>;     
-            out-max = <30>;       
-            deadzone = <12>;      
+            deadzone = <12>;
+            scale = <30>;
         };
     };
 

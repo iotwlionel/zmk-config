@@ -26,9 +26,9 @@
     kscan0: kscan_direct {
         compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
-        debounce-period-ms = <5>;
 
         // MAP EACH PHYSICAL KEY DIRECTLY TO A PRO MICRO PIN
+        // Debounce is inherited via the GPIO layout layer rather than a text key string here
         input-gpios
             = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1
             , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2

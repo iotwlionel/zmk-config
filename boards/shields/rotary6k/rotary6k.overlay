@@ -21,12 +21,12 @@
             ;
     };
 
-    // 2. Hardware Encoder Configuration (Pull-ups removed to fix signal clipping)
+    // 2. Hardware Encoder Configuration
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW)>; // P1.11 without internal pullup
-        b-gpios = <&gpio1 13 (GPIO_ACTIVE_LOW)>; // P1.13 without internal pullup
-        steps = <100>; 
+        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW)>; // P1.11 no pull-up
+        b-gpios = <&gpio1 13 (GPIO_ACTIVE_LOW)>; // P1.13 no pull-up
+        steps = <100>; // High-resolution step rate
         status = "okay";
     };
 

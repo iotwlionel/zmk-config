@@ -1,4 +1,5 @@
-#include <dt-bindings/zmk/physical_layouts.h>
+// Correct ZMK include header for physical layout definitions
+#include <physical_layouts.dtsi>
 
 / {
     physical_layout0: physical_layout_0 {
@@ -7,7 +8,7 @@
         transform = <&default_transform>;
         kscan = <&kscan0>;
         
-        // Tells ZMK Studio how your 6 keys are positioned on a 2D canvas grid
+        // This maps your 6 direct pin keys onto a canvas grid for ZMK Studio
         keys
             = <&key_physical_attrs 0 0 0 100 100 0 0> // Key 1 (Top Left)
             , <&key_physical_attrs 0 1 0 100 100 0 0> // Key 2 (Top Mid)

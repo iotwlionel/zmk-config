@@ -36,20 +36,20 @@
         wakeup-source;
 
         input-gpios
-            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1
-            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2
-            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 3
-            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 4
-            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 5
-            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 6
+            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1 (P0.17)
+            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2 (P0.20)
+            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 3 (P0.22)
+            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 4 (P0.24)
+            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 5 (P1.00)
+            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 6 (P0.11)
             ;
     };
 
     // ROTARY ENCODER HARDWARE MAPPING
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        a-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // (P1.11)
+        b-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // (P1.13)
         steps = <80>;
     };
 
@@ -58,4 +58,10 @@
         sensors = <&encoder>;
         triggers-per-rotation = <20>;
     };
+
+// A3 D18 P0.29 (ADC5) P1.15
+// A2 D19 P0.02 (ADC0) P0.02
+// A1 D20 P0.31 (ADC7) P0.29
+// A0 D21 P0.30 (ADC6) P0.31ewewewew
+
 };

@@ -24,8 +24,8 @@
     // 2. Hardware Encoder Configuration (Pull-ups removed to fix signal clipping)
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>; // P1.11 without internal pullup
-        b-gpios = <&gpio1 13 GPIO_ACTIVE_LOW>; // P1.13 without internal pullup
+        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW)>; // P1.11 without internal pullup
+        b-gpios = <&gpio1 13 (GPIO_ACTIVE_LOW)>; // P1.13 without internal pullup
         steps = <100>; 
         status = "okay";
     };

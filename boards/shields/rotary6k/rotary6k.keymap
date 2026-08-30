@@ -11,8 +11,8 @@
                 &kp Q  &kp W  &kp E  &kp R  &kp T  &studio_unlock
             >;
 
-            // Modern mouse scroll configuration
-            sensor-bindings = <&inc_dec_kp SCRL_UP SCRL_DN>;
+            // Modern mouse scroll configuration using the correct sensor binding macro
+            sensor-bindings = <&inc_dec_msc SCRL_UP SCRL_DN>;
         };
     };
 };

@@ -16,19 +16,27 @@
         rows = <2>;
         map = <
             RC(0,0) RC(0,1) RC(0,2) // Top Row: Key 1, Key 2, Key 3
-            RC(0,3) RC(0,4) RC(0,5) // Bottom Row: Key 4, Key 5, Key 6
+            RC(1,0) RC(1,1) RC(1,2) // Bottom Row: Key 4, Key 5, Key 6
         >;
     };
 
-    // Composite manager grouping your direct keys safely
+    // Composite manager grouping your direct keys safely into 2 rows
     kscan_composite: kscan_composite {
         compatible = "zmk,kscan-composite";
-        rows = <1>;
-        columns = <6>;
+        rows = <2>;
+        columns = <3>;
 
-        // Links your 6 digital direct pins straight to matrix cells
-        buttons {
+        // Row 1: First 3 keys from your direct pin array
+        row0 {
             kscan = <&kscan_direct>;
+            row = <0>;
+        };
+
+        // Row 2: Last 3 keys from your direct pin array
+        row1 {
+            kscan = <&kscan_direct>;
+            row = <1>;
+            column-offset = <3>; // Offsets the indexing to start at key 4
         };
     };
 

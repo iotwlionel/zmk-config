@@ -1,15 +1,14 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/pointing.h> // Required for &msc behaviors
+#include <dt-bindings/zmk/pointing.h>
 
 / {
     behaviors {
-        // Custom encoder behavior to translate physical turns to mouse scrolls
+        // Correct macro architecture for mapping encoders to modern pointing actions
         scroll_encoder: scroll_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_UP>, <&msc SCRL_DN>;
-            tap-ms = <20>;
         };
     };
 
@@ -21,7 +20,7 @@
                 &kp Q  &kp W  &kp E  &kp R  &kp T  &studio_unlock
             >;
 
-            // Reference your newly defined custom scroll behavior macro
+            // Links directly to the verified behavior node
             sensor-bindings = <&scroll_encoder>;
         };
     };

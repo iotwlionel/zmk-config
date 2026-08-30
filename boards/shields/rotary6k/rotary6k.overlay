@@ -7,7 +7,7 @@
         zmk,physical-layout = &physical_layout0;
     };
 
-    // 1. Direct GPIO Pin Input Scan Configuration (Mapped to raw nRF52840 pins)
+    // 1. Direct GPIO Pin Input Scan Configuration
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
@@ -21,11 +21,11 @@
             ;
     };
 
-    // 2. Hardware Encoder Configuration
+    // 2. Hardware Encoder Configuration (Pull-ups removed to fix signal clipping)
     encoder: encoder {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // P1.11
-        b-gpios = <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; // P1.13
+        a-gpios = <&gpio1 11 GPIO_ACTIVE_LOW>; // P1.11 without internal pullup
+        b-gpios = <&gpio1 13 GPIO_ACTIVE_LOW>; // P1.13 without internal pullup
         steps = <100>; 
         status = "okay";
     };

@@ -9,6 +9,17 @@
 / {
     chosen {
         zmk,kscan = &kscan0;
+        zmk,physical-layout = &physical_layout0;
+    };
+
+    // A default transform block is required to map your 6 keys cleanly
+    default_transform: keymap_transform0 {
+        compatible = "zmk,matrix-transform";
+        columns = <6>;
+        rows = <1>;
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5)
+        >;
     };
 
     kscan0: kscan_direct {
@@ -17,21 +28,19 @@
         debounce-period-ms = <5>;
 
         // MAP EACH PHYSICAL KEY DIRECTLY TO A PRO MICRO PIN
-        // Grounding a pin will trigger the corresponding key press
         input-gpios
-            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1 (Top Left)
-            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2 (Top Mid)
-            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 3 (Top Right)
-            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 4 (Bottom Left)
-            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 5 (Bottom Mid)
-            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 6 (Bottom Right)
+            = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1
+            , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2
+            , <&pro_micro  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 3
+            , <&pro_micro  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 4
+            , <&pro_micro  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 5
+            , <&pro_micro  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 6
             ;
     };
 
     // 1. ROTARY ENCODER CONFIGURATION
     encoder: encoder {
         compatible = "alps,ec11";
-        // Connect the encoder's single pin A and pin B to these Pro Micro pins
         a-gpios = <&pro_micro 14 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&pro_micro 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <80>;
@@ -48,20 +57,20 @@
         compatible = "analog-axis";
         poll-period-ms = <10>; // 10ms sampling rate for smooth movement
         
-        x_axis {
+        axis_x {
             zephyr,axis = <INPUT_REL_X>;
-            io-channels = <&adc 1>; // Pro Micro A1 pin (A0, A1, A2, A3 are valid ADC channels)
-            out-min = <(-30)>;     // Max cursor speed to the left
-            out-max = <30>;       // Max cursor speed to the right
-            deadzone = <12>;      // Prevents drifting when untouched
+            io-channels = <&adc 1>; // Pro Micro A1 pin
+            out-min = <(-30)>;     
+            out-max = <30>;       
+            deadzone = <12>;      
         };
 
-        y_axis {
+        axis_y {
             zephyr,axis = <INPUT_REL_Y>;
             io-channels = <&adc 2>; // Pro Micro A2 pin
-            out-min = <(-30)>;     // Max cursor speed upward
-            out-max = <30>;       // Max cursor speed downward
-            deadzone = <12>;      // Prevents drifting when untouched
+            out-min = <(-30)>;     
+            out-max = <30>;       
+            deadzone = <12>;      
         };
     };
 
@@ -70,10 +79,9 @@
         compatible = "zmk,input-listener";
         device = <&joystick>;
     };
+}; // <-- This closes the main root node block cleanly.
 
-    // 4. ENABLE THE INTERNAL VOLTAGE CHANNELS ON THE Microcontroller
-    &adc {
-        status = "okay";
-    };
+// 4. ENABLE THE INTERNAL VOLTAGE CHANNELS (Lives safely outside the root block)
+&adc {
+    status = "okay";
 };
-

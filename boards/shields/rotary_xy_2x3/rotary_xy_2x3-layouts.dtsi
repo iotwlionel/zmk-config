@@ -1,20 +1,23 @@
+// See https://zmk.dev/docs/development/hardware-integration/physical-layouts
+// for how to configure this.
+
 #include <physical_layouts.dtsi>
 
 / {
-    physical_layout0: physical_layout_0 {
+    default_layout: default_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default Layout";
         transform = <&default_transform>;
-        kscan = <&kscan0>; 
-        
-        // Coordinates map to Matrix grid layout positions: <ROW COL ROTATION WIDTH HEIGHT X_OFFSET Y_OFFSET>
-        keys
-            = <&key_physical_attrs 0 0 0 100 100    0    0> // Row 0, Col 0 (Top Left)
-            , <&key_physical_attrs 0 1 0 100 100  100    0> // Row 0, Col 1 (Top Mid)
-            , <&key_physical_attrs 0 2 0 100 100  200    0> // Row 0, Col 2 (Top Right)
-            , <&key_physical_attrs 1 0 0 100 100    0  100> // Row 1, Col 0 (Bottom Left)
-            , <&key_physical_attrs 1 1 0 100 100  100  100> // Row 1, Col 1 (Bottom Mid)
-            , <&key_physical_attrs 1 2 0 100 100  200  100> // Row 1, Col 2 (Bottom Right)
+        kscan = <&kscan>;
+
+        // Edit this to define the positions and sizes of the keys, or remove it
+        // if your keyboard will not support ZMK Studio.
+        // https://zmk.dev/docs/development/hardware-integration/physical-layouts#optional-keys-property
+        keys  //                     w   h    x    y     rot    rx    ry
+            = <&key_physical_attrs 100 100    0    0       0     0     0>
+            , <&key_physical_attrs 100 100  100    0       0     0     0>
+            , <&key_physical_attrs 100 100    0  100       0     0     0>
+            , <&key_physical_attrs 100 100  100  100       0     0     0>
             ;
     };
 };

@@ -1,28 +1,20 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/pointing.h> // Required for &msc scroll behaviors
+#include <dt-bindings/zmk/mouse.h> // Enables the mouse coordinate macros
 
 / {
-    behaviors {
-        // Correct macro syntax container for mapping encoders to mouse scroll wheel actions
-        scroll_encoder: scroll_encoder {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DN>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
-            // Mapping for your 6 direct input GPIO keys
+            // Mapping for the 6 direct inputs
             bindings = <
                 &kp Q  &kp W  &kp E  &kp R  &kp T  &studio_unlock
             >;
 
-            // Links directly to the custom scroll behavior node defined above
-            sensor-bindings = <&scroll_encoder>;
+            // Encoder rotation emulates mouse vertical wheel scroll using relative positioning
+            // Positive value (15) scrolls down, Negative value (-15) scrolls up
+            sensor-bindings = <&inc_dec_kp MOVE_Y(15) MOVE_Y(-15)>;
         };
     };
 };

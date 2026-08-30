@@ -1,0 +1,19 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h> // Required for mouse scroll bindings
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            // Mapping for the 6 direct inputs
+            bindings = <
+                &kp Q  &kp W  &kp E  &kp R  &kp T  &studio_unlock
+            >;
+
+            // Encoder rotation emulates mouse wheel (Clockwise = Scroll Up, Counter-Clockwise = Scroll Down)
+            sensor-bindings = <&inc_dec_kp SCROLL_UP SCROLL_DN>;
+        };
+    };
+};

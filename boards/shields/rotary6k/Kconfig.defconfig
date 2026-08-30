@@ -1,0 +1,6 @@
+if SHIELD_ROTARY6K
+
+config ZMK_KEYBOARD_NAME
+    default "rotary6k"
+
+endif # SHIELD_ROTARY6K

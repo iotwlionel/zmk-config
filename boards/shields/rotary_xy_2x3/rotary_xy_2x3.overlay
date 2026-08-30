@@ -28,7 +28,6 @@
         wakeup-source;
 
         // MAP EACH PHYSICAL KEY DIRECTLY TO A PRO MICRO PIN
-        // Debounce is inherited via the GPIO layout layer rather than a text key string here
         input-gpios
             = <&pro_micro  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 1
             , <&pro_micro  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Key 2
@@ -53,14 +52,14 @@
         triggers-per-rotation = <20>;
     };
 
-    // 2. CHOOSE YOUR RELEVANT ANALOG INPUTS
-    joystick: analog_axis {
+    // 2. CHOOSE YOUR RELEVANT ANALOG INPUTS (Assigned an explicit instance node)
+    joystick: joystick {
         compatible = "analog-axis";
-        poll-period-ms = <10>; // 10ms sampling rate for smooth movement
+        poll-period-ms = <10>; 
         
         axis_x {
             zephyr,axis = <INPUT_REL_X>;
-            io-channels = <&adc 1>; // Pro Micro A1 pin
+            io-channels = <&adc 1>; // Maps to Pro Micro A1 / physical pin 19
             out-min = <(-30)>;     
             out-max = <30>;       
             deadzone = <12>;      
@@ -68,7 +67,7 @@
 
         axis_y {
             zephyr,axis = <INPUT_REL_Y>;
-            io-channels = <&adc 2>; // Pro Micro A2 pin
+            io-channels = <&adc 2>; // Maps to Pro Micro A2 / physical pin 20
             out-min = <(-30)>;     
             out-max = <30>;       
             deadzone = <12>;      
@@ -82,7 +81,7 @@
     };
 }; 
 
-// 4. ENABLE THE INTERNAL VOLTAGE CHANNELS (Lives safely outside the root block)
+// 4. ENABLE THE INTERNAL VOLTAGE CHANNELS
 &adc {
     status = "okay";
 };
